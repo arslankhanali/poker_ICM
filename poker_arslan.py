@@ -10,12 +10,10 @@ import sys
 def hand_format(hand):
     hand.strip()
     hand= hand.replace(' ','')
-    print(hand)
 
     p1=hand[:len(hand)//2]
     p2=hand[len(hand)//2:]
-    print(p1)
-    print(p2)
+
     p1_numbers=[]
     p1_suit=[]
     p2_numbers=[]
@@ -77,46 +75,56 @@ def straightflush(numbers,suit):
 def allpairs(numbers,suit):
     pairs={}
     for i in range(2,15):
-        # print(i, numbers.count(i))
         if numbers.count(i) > 0:
-            pairs[i]=numbers.count(i) 
+            if numbers.count(i) not in pairs.keys():
+                pairs[numbers.count(i)]=i
+            else:
+                pairs[numbers.count(i)]=[pairs[numbers.count(i)],i]
     return pairs
 
-def fourofakind(numbers,suit):
+def fourofakind(pairs):
+    if 4 in pairs.keys():
+        return pairs[4]
+    return False
 
-    for i in range(2,15):
-        # print(i, numbers.count(i))
-        if numbers.count(i) == 4:
-            return i
+def fullhouse(pairs):
+    if 3 in pairs.keys():
+        if 2 in pairs.keys():
+            return [pairs[3],pairs[2]]
     return False
 
 
-
-def fullhouse(numbers,suit):
-
-# def flush(numbers,suit):
-# def striagh(numbers,suit):
-def threeofakind(numbers,suit):
-    for i in range(2,15):
-        # print(i, numbers.count(i))
-        if numbers.count(i) == 3:
-            return i
+def flush(numbers,suit):
+    if suit.count('S')==5 or suit.count('D')==5 or suit.count('H')==5 or suit.count('C')==5:
+        return True
     return False
 
-def twopair(numbers,suit):
-    for i in range(2,15):
-        # print(i, numbers.count(i))
-        if numbers.count(i) == 4:
-            return i
+def striagh(numbers,suit):
+    if numbers[-1]-numbers[0] == 4:
+            return True
     return False
 
-def pair(numbers,suit):
-    for i in range(2,15):
-        # print(i, numbers.count(i))
-        if numbers.count(i) == 2:
-            return i
+def threeofakind(pairs):
+    if 3 in pairs.keys():
+        return pairs[4]
     return False
-# def highcard(numbers,suit):
+
+
+def twopair(pairs):
+    if 2 in pairs.keys():
+        if type(pairs[2]) == list
+        return pairs[2].sort()
+    return False
+
+
+def onepair(pairs):
+    if 2 in pairs.keys():
+        if type(pairs[2]) != list
+        return pairs[2]
+    return False
+
+def highcard(numbers,suit):
+    return max(numbers)
 
 
 
@@ -130,9 +138,18 @@ def find_winner(all_hands):
         p1_numbers,p1_suit,p2_numbers,p2_suit=hand_format(hand)
         print(p1_numbers,p1_suit,p2_numbers,p2_suit)
 
-        print(royalflush(p1_numbers,p1_suit))
-        print(straightflush(p1_numbers,p1_suit))
-        print(fourofakind(p1_numbers,p1_suit))
+        # print(royalflush(p1_numbers,p1_suit))
+        # print(straightflush(p1_numbers,p1_suit))
+        pairs=allpairs(p1_numbers,p1_suit)
+        print(pairs)
+        print(fourofakind(pairs))
+        print(fullhouse(pairs))
+        print(flush(pairs))
+        print(striagh(pairs))
+        print(threeofakind(pairs))
+        print(twopair(pairs))
+        print(onepair(pairs))
+        print(highcard(pairs))
         
 
 
@@ -140,10 +157,10 @@ def find_winner(all_hands):
 
 
 
-# find_winner(["9C 9D 8D 7C 3C 2S KD TH 9H 8H"])
-# find_winner(["JC TC AC KC QC 2S KD TH 9H 8H"])
+# find_winner(["9C 9D 8D 7C 3C 2S KD TH 9H 8H"]) 
+# find_winner(["JC TC AC KC QC 2S KD TH 9H 8H"]) #royal flush
 
-find_winner(["JC JD AC JH JS 2S KD TH 9H 8H"])
+find_winner(["JC 2D 2C 2H 2S 2S KD TH 9H 8H"]) #4ofakind
 
 # if __name__ == "__main__":
 #     print("Welcome to Poker hand sorter by ARSLAN!!!")
