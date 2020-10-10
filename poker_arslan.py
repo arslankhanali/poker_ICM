@@ -85,12 +85,14 @@ def allpairs(numbers,suit):
 def fourofakind(pairs):
     if 4 in pairs.keys():
         return pairs[4]
-    return False
+    return 0
 
 def fullhouse(pairs):
     if 3 in pairs.keys():
         if 2 in pairs.keys():
-            return [pairs[3],pairs[2]]
+            ans=[pairs[3],pairs[2]]
+            ans.sort()
+            return ans
     return False
 
 
@@ -99,21 +101,23 @@ def flush(numbers,suit):
         return True
     return False
 
-def striagh(numbers,suit):
+def straight(numbers,suit):
     if numbers[-1]-numbers[0] == 4:
-            return True
+            return numbers[-1]
     return False
 
 def threeofakind(pairs):
     if 3 in pairs.keys():
         return pairs[3]
-    return False
+    return 0
 
 
 def twopair(pairs):
     if 2 in pairs.keys():
         if type(pairs[2]) == list:
-            return pairs[2]
+            ans=pairs[2]
+            ans.sort()
+            return ans
     return False
 
 
@@ -121,21 +125,19 @@ def onepair(pairs):
     if 2 in pairs.keys():
         if type(pairs[2]) != list:
             return pairs[2]
-    return False
+    return 0
 
-def highcard(numbers,suit):
-    return max(numbers)
 
 
 
 def find_winner(all_hands):
+    p1_wins=0
+    p2_wins=0
 
     for hand in all_hands:
 
-        p1_wins=0
-        p2_wins=0
-
         p1_numbers,p1_suit,p2_numbers,p2_suit=hand_format(hand)
+        print(p1_wins,p2_wins)
         print(p1_numbers,p1_suit,p2_numbers,p2_suit)
 
         pairs=allpairs(p1_numbers,p1_suit)
@@ -144,7 +146,8 @@ def find_winner(all_hands):
         #ROYAL FLUSH
         rf1=royalflush(p1_numbers,p1_suit)
         rf2=royalflush(p2_numbers,p2_suit)
-        if rf1==rf2== True:
+        print('royal flush',rf1,rf2)
+        if rf1 == rf2 == True:
             p1_wins+=1
             p2_wins+=1
         elif rf1>rf2:
@@ -155,7 +158,8 @@ def find_winner(all_hands):
             #STRAIGHT FLUSH
             sf1=straightflush(p1_numbers,p1_suit)
             sf2=straightflush(p2_numbers,p2_suit)
-            if sf1==sf2:
+            print('straight flush',sf1,sf2)
+            if sf1==sf2 and sf1 != False:
                 p1_wins+=1
                 p2_wins+=1
             elif sf1>sf2:
@@ -166,29 +170,36 @@ def find_winner(all_hands):
                 #FOUR OF A KIND
                 fok1=fourofakind(pairs)
                 fok2=fourofakind(pairs2)
-                if fok1==fok2:
-                    p1_wins+=1
-                    p2_wins+=1
+                print('four of a kind',fok1,fok2)
+                if fok1==fok2 and fok1 != 0:
+                    if p1_numbers>p2_numbers:
+                        p1_wins+=1
+                    else:
+                        p2_wins+=1
                 elif fok1>fok2:
                     p1_wins+=1
                 elif fok2>fok1:
                     p2_wins+=1
                 else:
                     #FULL HOUSE
-                    fl1=fullhouse(p1_numbers,p1_suit)
-                    fl2=fullhouse(p2_numbers,p2_suit)
-                    if fl1==fl2:
+                    fl1=fullhouse(pairs)
+                    fl2=fullhouse(pairs2)
+                    print('fullhouse',fl1,fl2)
+                    if fl1==fl2 and fl1 != False:
+                        if p1_numbers>p2_numbers:
+                            p1_wins+=1
+                        else:
+                            p2_wins+=1
+                    elif fl2 == False and fl1 != False:
                         p1_wins+=1
-                        p2_wins+=1
-                    elif fl1>fl2:
-                        p1_wins+=1
-                    elif fl2>fl1:
+                    elif fl1 == False and fl2 != False:
                         p2_wins+=1
                     else:
                         #FLUSH
                         f1=flush(p1_numbers,p1_suit)
                         f2=flush(p2_numbers,p2_suit)
-                        if f1==f2:
+                        print('flush',f1,f2)
+                        if f1==f2 and f1 != False:
                             p1_wins+=1
                             p2_wins+=1
                         elif f1>f2:
@@ -199,7 +210,8 @@ def find_winner(all_hands):
                             #STRAIGHT
                             s1=straight(p1_numbers,p1_suit)
                             s2=straight(p2_numbers,p2_suit)
-                            if s1==s2:
+                            print('straight',s1,s2)
+                            if s1==s2==True:
                                 p1_wins+=1
                                 p2_wins+=1
                             elif s1>s2:
@@ -210,9 +222,12 @@ def find_winner(all_hands):
                                 #THREE OF A KIND
                                 tok1=threeofakind(pairs)
                                 tok2=threeofakind(pairs2)
-                                if tok1==tok2:
-                                    p1_wins+=1
-                                    p2_wins+=1
+                                print('three of a kind',tok1,tok2)
+                                if tok1==tok2 and tok1 != 0:
+                                    if p1_numbers>p2_numbers:
+                                        p1_wins+=1
+                                    else:
+                                        p2_wins+=1
                                 elif tok1>tok2:
                                     p1_wins+=1
                                 elif tok2>tok1:
@@ -221,58 +236,56 @@ def find_winner(all_hands):
                                     #TWO PAIR
                                     tp1=twopair(pairs)
                                     tp2=twopair(pairs2)
-                                    if tp1==tp2:
+                                    print('two pairs',tp1,tp2)
+                                    if tp1==tp2 and tp1 != False:
+                                        if p1_numbers>p2_numbers:
+                                            p1_wins+=1
+                                        else:
+                                            p2_wins+=1
+                                    elif tp2==False and tp1 != False:
                                         p1_wins+=1
-                                        p2_wins+=1
-                                    elif tp1>tp2:
-                                        p1_wins+=1
-                                    elif tp2>tp1:
+                                    elif tp1==False and tp2 != False:
                                         p2_wins+=1
                                     else:
                                         #ONE PAIR
                                         op1=onepair(pairs)
-                                        op2=
-                                        if op1==op2:
-                                            p1_wins+=1
-                                            p2_wins+=1
-                                        elif op1>op2
+                                        op2=onepair(pairs2)
+                                        print('one pair',op1,op2)
+                                        if op1==op2 and op1 != 0:
+                                            if p1_numbers>p2_numbers:
+                                                p1_wins+=1
+                                            else:
+                                                p2_wins+=1
+                                        elif op1>op2:
                                             p1_wins+=1
                                         elif op2>op1:
                                             p2_wins+=1
                                         else:
                                             #HIGHCARD
-                                            hc1=highcard(p1_numbers,p1_suit)
-                                            hc2=highcard(p2_numbers,p2_suit)
-                                            if hc1==hc2:
+                                            if p1_numbers>p2_numbers:
                                                 p1_wins+=1
-                                                p2_wins+=1
-                                            elif hc1>hc2:
-                                                p1_wins+=1
-                                            elif hc2>hc1:
+                                            elif p2_numbers>p1_numbers:
                                                 p2_wins+=1
                                             else:
                                                 continue
 
 
-
-            
+    print("Player 1 : ",p1_wins)   
+    print("Player 2 : ",p2_wins)           
+    return p1_wins,p2_wins
 
 
 
         # print(royalflush(p1_numbers,p1_suit))
         # print(straightflush(p1_numbers,p1_suit))
-        pairs=allpairs(p1_numbers,p1_suit)
-        print(pairs)
-
-        print(fourofakind(pairs))
-        print(fullhouse(pairs))
-        # return fullhouse(pairs)
-        print(flush(p1_numbers,p1_suit))
-        print(straigh(p1_numbers,p1_suit))
-        print(threeofakind(pairs))
-        print(twopair(pairs))
-        print(onepair(pairs))
-        print(highcard(p1_numbers,p1_suit))
+        # print(fourofakind(pairs))
+        # print(fullhouse(pairs))
+        # print(flush(p1_numbers,p1_suit))
+        # print(straigh(p1_numbers,p1_suit))
+        # print(threeofakind(pairs))
+        # print(twopair(pairs))
+        # print(onepair(pairs))
+        # print(highcard(p1_numbers,p1_suit))
         
 
 
@@ -292,20 +305,17 @@ def find_winner(all_hands):
 # assert find_winner(["JC 8D 8C AH 2S 2S KD TH 9H 8H"]) == 8 , 'not 2'
 # assert find_winner(["2C 3D 4C 4H 5S 2S KD TH 9H 8H"]) == 5, '5 not highcard'
 
-#if __name__ == "__main__":
-#     print("Welcome to Poker hand sorter by ARSLAN!!!")
-#     print("Provide hands for each player in the format \
-# 'AH 9S 4D TD 8S 4H JS 3C TC 8D', where the first 5 \
-# cards in the line have been dealt to Player 1 and last 5 to player 2")
-#     print("Hit enter twice when you have added all hands")
-#     all_hands=[]
-#     for line in iter(sys.stdin.readline, ''):
-#         if line=="\n":
-#             break
-        
-#         all_hands.append(line.replace('\n',''))
+if __name__ == "__main__":
+    print("Welcome to Poker hand sorter by ARSLAN!!!")
+    print("Provide hands for each player in the format \
+'AH 9S 4D TD 8S 4H JS 3C TC 8D', where the first 5 \
+cards in the line have been dealt to Player 1 and last 5 to player 2")
+    print("Hit enter twice when you have added all hands")
+    all_hands=[]
+    for line in iter(sys.stdin.readline, ''):
+        if line=="\n":
+            break
+        all_hands.append(line.replace('\n',''))
 
-    # print("Following hands added")
-    # for hand in all_hands:
-    #     print(hand)
+    find_winner(all_hands)
 
