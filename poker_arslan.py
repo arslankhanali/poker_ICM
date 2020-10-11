@@ -424,7 +424,7 @@ if __name__ == "__main__":
     try:
         find_winner(all_hands)
     except :
-        print("  !Invalid input. Please cheack again!")
+        print("  !Invalid input. Please check again!")
     
     #stop time
     stop = timeit.default_timer()
