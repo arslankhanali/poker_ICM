@@ -307,7 +307,6 @@ def find_winner(all_hands):
                                 player1_wins+=1
                                 player2_wins+=1
                             elif straight_player1>straight_player2:
-                                print("player1 s")
                                 player1_wins+=1
                             elif straight_player2>straight_player1:
                                 player2_wins+=1
@@ -429,7 +428,7 @@ if __name__ == "__main__":
     
     #stop time
     stop = timeit.default_timer()
-    
+
     #time taken. used to check efficiency
     print('Time Taken : ', stop - start,'sec')
     print("---------------ThankYou----------------") 

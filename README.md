@@ -12,13 +12,14 @@ $ cat poker-hands.txt | ./poker_arslan.py
 ```
 Expected output 
 ```python
-        Player 1 :  263  hands
+        Player 1 :  263  hands    
         Player 2 :  237  hands
 ```
 
 ## Assumptions
 There is always a clear winner.
-A is used only as a high card.
+'T' represents 10
+'A' is used only as a high card.
 
 ## Input
 Each line read via STDIN will be a set of 10 cards. Each card is represented by 2 characters - the value and the suit. The first 5 cards in the line have been dealt to Player 1, the last 5 cards in the line belong to Player 2.
@@ -34,7 +35,7 @@ Player 2: 12 hands
 ## Test Cases
 There is a test case function provided to check various hands.
 
-##Future
+## Future
 Implement a function to check if given input is correct.
 Convert it to a full working game.
 Each player will be shown their win probability at each stage.
