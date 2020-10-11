@@ -15,6 +15,19 @@ Expected output
         Player 1 :  263  hands    
         Player 2 :  237  hands
 ```
+## Features 
+
+* Passed the provided test file and took just 0.01sec
+* README.md file for GitHub.
+* Efficient solution. Provides the execution time as well.
+* Presentable interface. Easy to use.
+* Doc-strings for each function.
+* Detailed comments.
+* Meaningful variable names.
+* Code is written to ease future development.
+* Provides test cases.
+* ToDO list if someone wants to make it into a full program.
+
 
 ## Assumptions
 There is always a clear winner.
@@ -29,7 +42,7 @@ AH 9S 4D TD 8S 4H JS 3C TC 8D
 ## Output
 At the completion of the stream into STDIN (EOF), the output of your file (in STDOUT) must clearly state how many hands Player 1 won, and how many hands Player 2 won.
 ##### For example
-Player 1: 10 hands    
+Player 1: 10 hands      
 Player 2: 12 hands
 
 ## Test Cases
