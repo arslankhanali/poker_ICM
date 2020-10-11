@@ -29,7 +29,7 @@ AH 9S 4D TD 8S 4H JS 3C TC 8D
 ## Output
 At the completion of the stream into STDIN (EOF), the output of your file (in STDOUT) must clearly state how many hands Player 1 won, and how many hands Player 2 won.
 ##### For example
-Player 1: 10 hands
+Player 1: 10 hands    
 Player 2: 12 hands
 
 ## Test Cases
